@@ -1,10 +1,14 @@
 package pl.polsl.ga.general
 
-import java.util.*
+abstract class Genome<T> {
 
-abstract class Genome {
+    abstract var genotype: T
 
-    companion object {
-        val RANDOM = Random()
-    }
+    abstract fun getLength(): Int
+
+    abstract fun getSegment(start: Int, end: Int): Genome<*>
+
+    abstract fun flipBitAt(position: Int)
+
+    abstract fun plus(other: Genome<*>): Genome<*>
 }

@@ -1,13 +1,13 @@
 package pl.polsl.ga.general
 
-import pl.polsl.ga.impl.BasicCrossoverOperator
 import pl.polsl.ga.impl.BasicMutator
 import pl.polsl.ga.impl.BasicSelector
 import pl.polsl.ga.impl.CountingStopCondition
+import pl.polsl.ga.impl.SinglePointCrossoverOperator
 
 class GeneticAlgorithm(private val individualFactory: () -> Individual,
                        private val selector: Selector = BasicSelector(),
-                       private val crossoverOperator: CrossoverOperator = BasicCrossoverOperator(),
+                       private val crossoverOperator: CrossoverOperator = SinglePointCrossoverOperator(),
                        private val mutator: Mutator = BasicMutator(),
                        private val stopCondition: StopCondition = CountingStopCondition(1000),
                        private val populationSize: Int = 1000) {
@@ -34,12 +34,14 @@ class GeneticAlgorithm(private val individualFactory: () -> Individual,
 
             // Mutator individuals and create a new population
             population = mutator.mutate(crossedOverIndividuals)
+
+            generation++
         }
 
     }
 
     private fun initializePopulation() {
-        for (i in 0..populationSize) {
+        for (i in 0 until populationSize) {
             val individual = individualFactory.invoke()
             individual.initialize()
             population.add(individual)

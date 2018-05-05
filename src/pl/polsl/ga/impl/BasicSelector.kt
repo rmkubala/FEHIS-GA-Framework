@@ -1,6 +1,7 @@
 package pl.polsl.ga.impl
 
 import pl.polsl.ga.general.Individual
+import pl.polsl.ga.general.RandHelper
 import pl.polsl.ga.general.Selector
 
 class BasicSelector : Selector() {
@@ -19,7 +20,7 @@ class BasicSelector : Selector() {
 
         val selectedIndividuals = ArrayList<Individual>()
         while (selectedIndividuals.size < population.size) {
-            val rand = RANDOM.nextDouble()
+            val rand = RandHelper.RANDOM.nextDouble()
             var selectedIndividualId = 0
             while (population[selectedIndividualId].accumulatedNormalizedFitness < rand) {
                 selectedIndividualId++
