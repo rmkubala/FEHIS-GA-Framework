@@ -1,8 +1,7 @@
 package pl.polsl.ga.general
 
-abstract class Individual<T : Genome>(genomeFactory: () -> T) {
+abstract class Individual(val genome: Genome) {
     var fitness = 0.0
-    val genome: T = genomeFactory.invoke()
 
     abstract fun updateFitness()
 

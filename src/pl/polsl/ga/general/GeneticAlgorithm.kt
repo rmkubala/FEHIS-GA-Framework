@@ -5,13 +5,14 @@ import pl.polsl.ga.impl.BasicMutator
 import pl.polsl.ga.impl.BasicSelector
 import pl.polsl.ga.impl.CountingStopCondition
 
-class GeneticAlgorithm<T : Individual<*>>(private val selector: Selector = BasicSelector(),
-                                          private val crossoverOperator: CrossoverOperator = BasicCrossoverOperator(),
-                                          private val mutator: Mutator = BasicMutator(),
-                                          private val stopCondition: StopCondition = CountingStopCondition(),
-                                          private val populationSize: Int = 1000) {
+class GeneticAlgorithm(private val individualFactory: () -> Individual,
+                       private val selector: Selector = BasicSelector(),
+                       private val crossoverOperator: CrossoverOperator = BasicCrossoverOperator(),
+                       private val mutator: Mutator = BasicMutator(),
+                       private val stopCondition: StopCondition = CountingStopCondition(1000),
+                       private val populationSize: Int = 1000) {
 
-    private var population: ArrayList<T> = ArrayList(populationSize)
+    private var population: ArrayList<Individual> = ArrayList()
     var generation = 0
 
 
@@ -38,10 +39,14 @@ class GeneticAlgorithm<T : Individual<*>>(private val selector: Selector = Basic
     }
 
     private fun initializePopulation() {
-        population.forEach { i: T -> i.initialize() }
+        for (i in 0..populationSize) {
+            val individual = individualFactory.invoke()
+            individual.initialize()
+            population.add(individual)
+        }
     }
 
     private fun updatePopulationFitness() {
-        population.forEach { i: T -> i.updateFitness() }
+        population.forEach { i: Individual -> i.updateFitness() }
     }
 }
