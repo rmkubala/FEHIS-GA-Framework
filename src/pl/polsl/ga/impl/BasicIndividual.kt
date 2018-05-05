@@ -2,7 +2,7 @@ package pl.polsl.ga.impl
 
 import pl.polsl.ga.general.Individual
 
-class BasicIndividual : Individual(BasicGenome()) {
+class BasicIndividual : Individual(BinaryGenome()) {
 
 
     override fun updateFitness() {
