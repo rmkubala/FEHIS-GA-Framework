@@ -60,8 +60,10 @@ class BinaryGenome() : Genome<Long>() {
     }
 
     override fun flipBitAt(position: Int) {
+        bitPattern(this.genotype)
         var mask: Long = 0L.inv() shl (getLength() - position) shr position
-        this.genotype = this.genotype xor mask
+        this.genotype = (this.plus(getSegment(position, position + 1))).genotype as Long
+        bitPattern(this.genotype)
     }
 }
 

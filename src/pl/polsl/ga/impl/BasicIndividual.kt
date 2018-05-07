@@ -16,7 +16,7 @@ class BasicIndividual(fitness: Double = 0.0, accumulatedNormalizedFitness: Doubl
     }
 
     override fun copy(): Individual {
-        return BasicIndividual(this.fitness, this.accumulatedNormalizedFitness, this.genome)
+        return BasicIndividual(this.fitness, this.accumulatedNormalizedFitness, BinaryGenome(this.genome.genotype as Long) as Genome<Any>)
     }
 
 }
