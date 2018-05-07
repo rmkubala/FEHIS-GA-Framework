@@ -50,8 +50,10 @@ class BinaryGenomeManipulator() : GenomeManipulator<Long>() {
     }
 
     override fun flipBitAt(genome: Long, position: Int): Long {
+//        bitPattern(genome)
         var mask: Long = getSegment(genome, position, position + 1)
-        return genome and mask
+//        bitPattern(genome and mask)
+        return genome xor mask
     }
 }
 

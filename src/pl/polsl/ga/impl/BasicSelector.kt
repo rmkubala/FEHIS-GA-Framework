@@ -14,9 +14,10 @@ class BasicSelector<T> : Selector<T>() {
         //Normalize the fitness and store the accumulated fitness
         var accumulatedFitness = 0.0
         population.forEach {
-            accumulatedFitness += it.fitness / sumOfFitnessScores
+            accumulatedFitness += (it.fitness / sumOfFitnessScores)
             it.accumulatedNormalizedFitness = accumulatedFitness
         }
+
 
         val selectedIndividuals = ArrayList<Individual<T>>()
         while (selectedIndividuals.size < population.size) {

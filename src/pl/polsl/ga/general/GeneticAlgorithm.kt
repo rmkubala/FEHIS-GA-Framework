@@ -56,4 +56,9 @@ class GeneticAlgorithm<T>(private val individualFactory: () -> Individual<T>,
     private fun updatePopulationFitness() {
         population.forEach { i: Individual<T> -> fitnessUpdater.invoke(i) }
     }
+
+    fun getBestIndividual(): Individual<T> {
+        population.sortDescending()
+        return population[0]
+    }
 }

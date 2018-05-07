@@ -10,4 +10,10 @@ class Individual<T>(var genome: T, var fitness: Double = 0.0, var accumulatedNor
     fun copy(): Individual<T> {
         return Individual(genome, this.fitness, this.accumulatedNormalizedFitness)
     }
+
+    override fun toString(): String {
+        return "Individual(genome=$genome, fitness=$fitness, accumulatedNormalizedFitness=$accumulatedNormalizedFitness)"
+    }
+
+
 }
