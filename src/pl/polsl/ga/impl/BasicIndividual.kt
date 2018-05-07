@@ -8,11 +8,11 @@ class BasicIndividual(fitness: Double = 0.0, accumulatedNormalizedFitness: Doubl
 
 
     override fun updateFitness() {
-
+//        TODO()
     }
 
     override fun initialize() {
-
+//        TODO()
     }
 
     override fun copy(): Individual {
