@@ -1,6 +1,9 @@
 package pl.polsl.ga.general
 
-abstract class Mutator {
-    abstract fun mutate(crossedOverIndividuals: ArrayList<Individual>): ArrayList<Individual>
+abstract class Mutator<T> {
+
+    lateinit var genomeManipulator: GenomeManipulator<T>
+
+    abstract fun mutate(crossedOverIndividuals: ArrayList<Individual<T>>): ArrayList<Individual<T>>
 
 }

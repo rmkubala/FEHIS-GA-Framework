@@ -1,25 +1,20 @@
 package pl.polsl.ga.impl
 
-import pl.polsl.ga.general.Genome
-import pl.polsl.ga.general.RandHelper
+import pl.polsl.ga.general.GenomeManipulator
 
 /**
  * The genotype is of type Long so the maximum Bit count is 64 bits
  */
-class BinaryGenome() : Genome<Long>() {
-    override fun plus(other: Genome<*>): Genome<*> {
-        val genome = BinaryGenome()
-        genome.genotype = this.genotype or other.genotype as Long
-        return genome
+class BinaryGenomeManipulator() : GenomeManipulator<Long>() {
+    override fun plus(genome1: Long, genome2: Long): Long {
+        return genome1 or genome2
     }
-
-    override var genotype: Long = RandHelper.RANDOM.nextLong()
 
     override fun getLength(): Int {
         return 64
     }
 
-    override fun getSegment(start: Int, end: Int): Genome<Long> {
+    override fun getSegment(genome: Long, start: Int, end: Int): Long {
         // Mask is used to get only the interesting segment and zeros where needed
         // Example: start = 2, end = 10
         // Mask: 00111111110000000000000...
@@ -29,11 +24,10 @@ class BinaryGenome() : Genome<Long>() {
 
 //        bitPattern(mask)
 
-        return BinaryGenome(this.genotype and mask)
+        return genome and mask
     }
 
     private fun bitPattern(n: Long) {
-
         var mask = 1L shl 63
         var count = 0
         while (mask != 0L) {
@@ -55,15 +49,9 @@ class BinaryGenome() : Genome<Long>() {
         println()
     }
 
-    constructor(genotype: Long) : this() {
-        this.genotype = genotype
-    }
-
-    override fun flipBitAt(position: Int) {
-        bitPattern(this.genotype)
-        var mask: Long = 0L.inv() shl (getLength() - position) shr position
-        this.genotype = (this.plus(getSegment(position, position + 1))).genotype as Long
-        bitPattern(this.genotype)
+    override fun flipBitAt(genome: Long, position: Int): Long {
+        var mask: Long = getSegment(genome, position, position + 1)
+        return genome and mask
     }
 }
 

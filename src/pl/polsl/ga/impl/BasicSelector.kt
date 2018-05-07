@@ -4,8 +4,8 @@ import pl.polsl.ga.general.Individual
 import pl.polsl.ga.general.RandHelper
 import pl.polsl.ga.general.Selector
 
-class BasicSelector : Selector() {
-    override fun drawIndividuals(population: ArrayList<Individual>): ArrayList<Individual> {
+class BasicSelector<T> : Selector<T>() {
+    override fun drawIndividuals(population: ArrayList<Individual<T>>): ArrayList<Individual<T>> {
         var sumOfFitnessScores = 0.0
         population.forEach { sumOfFitnessScores += it.fitness }
 
@@ -18,7 +18,7 @@ class BasicSelector : Selector() {
             it.accumulatedNormalizedFitness = accumulatedFitness
         }
 
-        val selectedIndividuals = ArrayList<Individual>()
+        val selectedIndividuals = ArrayList<Individual<T>>()
         while (selectedIndividuals.size < population.size) {
             val rand = RandHelper.RANDOM.nextDouble()
             var selectedIndividualId = 0

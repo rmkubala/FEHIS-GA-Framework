@@ -1,16 +1,13 @@
 package pl.polsl.ga.general
 
-abstract class Individual(val genome: Genome<Any>, var fitness: Double = 0.0, var accumulatedNormalizedFitness: Double = 0.0)
-    : Comparable<Individual> {
+class Individual<T>(var genome: T, var fitness: Double = 0.0, var accumulatedNormalizedFitness: Double = 0.0)
+    : Comparable<Individual<*>> {
 
-
-    abstract fun updateFitness()
-
-    abstract fun initialize()
-
-    override fun compareTo(other: Individual): Int {
+    override fun compareTo(other: Individual<*>): Int {
         return this.fitness.compareTo(other.fitness)
     }
 
-    abstract fun copy(): Individual
+    fun copy(): Individual<T> {
+        return Individual(genome, this.fitness, this.accumulatedNormalizedFitness)
+    }
 }

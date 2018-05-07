@@ -5,16 +5,22 @@ import pl.polsl.ga.impl.BasicSelector
 import pl.polsl.ga.impl.CountingStopCondition
 import pl.polsl.ga.impl.SinglePointCrossoverOperator
 
-class GeneticAlgorithm(private val individualFactory: () -> Individual,
-                       private val selector: Selector = BasicSelector(),
-                       private val crossoverOperator: CrossoverOperator = SinglePointCrossoverOperator(),
-                       private val mutator: Mutator = BasicMutator(),
-                       private val stopCondition: StopCondition = CountingStopCondition(1000),
-                       private val populationSize: Int = 1000) {
+class GeneticAlgorithm<T>(private val individualFactory: () -> Individual<T>,
+                          private val fitnessUpdater: (Individual<T>) -> Unit,
+                          private val genomeManipulator: GenomeManipulator<T>,
+                          private val selector: Selector<T> = BasicSelector(),
+                          private val crossoverOperator: CrossoverOperator<T> = SinglePointCrossoverOperator(),
+                          private val mutator: Mutator<T> = BasicMutator(),
+                          private val stopCondition: StopCondition = CountingStopCondition(1000),
+                          private val populationSize: Int = 1000) {
 
-    private var population: ArrayList<Individual> = ArrayList()
+    private var population: ArrayList<Individual<T>> = ArrayList()
     var generation = 0
 
+    init {
+        crossoverOperator.genomeManipulator = genomeManipulator
+        mutator.genomeManipulator = genomeManipulator
+    }
 
     fun run() {
         // Restart the generation counter
@@ -22,7 +28,7 @@ class GeneticAlgorithm(private val individualFactory: () -> Individual,
         // Initialize the population with random data
         initializePopulation()
         // Run until the stop condition is reached
-        while (stopCondition.shouldContinue(population, generation)) {
+        while (stopCondition.shouldContinue(population as ArrayList<Individual<Any>>, generation)) {
             // Update fitness of every individual in the population
             updatePopulationFitness()
 
@@ -43,12 +49,11 @@ class GeneticAlgorithm(private val individualFactory: () -> Individual,
     private fun initializePopulation() {
         for (i in 0 until populationSize) {
             val individual = individualFactory.invoke()
-            individual.initialize()
             population.add(individual)
         }
     }
 
     private fun updatePopulationFitness() {
-        population.forEach { i: Individual -> i.updateFitness() }
+        population.forEach { i: Individual<T> -> fitnessUpdater.invoke(i) }
     }
 }

@@ -2,8 +2,6 @@ package pl.polsl.ga.general
 
 import java.util.*
 
-abstract class Selector {
-
-
-    abstract fun drawIndividuals(population: ArrayList<Individual>): ArrayList<Individual>
+abstract class Selector<T> {
+    abstract fun drawIndividuals(population: ArrayList<Individual<T>>): ArrayList<Individual<T>>
 }
