@@ -5,6 +5,18 @@ import pl.polsl.ga.impl.BasicSelector
 import pl.polsl.ga.impl.CountingStopCondition
 import pl.polsl.ga.impl.SinglePointCrossoverOperator
 
+/**
+ * Main algorithm class
+ *
+ * @param individualFactory - function which creates a single individual
+ * @param fitnessUpdater - function which updates single individual's fitness score
+ * @param genomeManipulator - an instance of [GenomeManipulator] compatible with individual's genome
+ * @param selector - an instance of [Selector] which selects individuals from population
+ * @param crossoverOperator - an instance of [CrossoverOperator] for Crossover stage
+ * @param mutator - an instance of [Mutator] for Mutation stage
+ * @param stopCondition - an instance of [StopCondition] which determines when to stop the algorithm
+ * @param populationSize - number of individuals in population
+ */
 class GeneticAlgorithm<T>(private val individualFactory: () -> Individual<T>,
                           private val fitnessUpdater: (Individual<T>) -> Unit,
                           private val genomeManipulator: GenomeManipulator<T>,
@@ -14,6 +26,7 @@ class GeneticAlgorithm<T>(private val individualFactory: () -> Individual<T>,
                           private val stopCondition: StopCondition = CountingStopCondition(1000),
                           private val populationSize: Int = 1000) {
 
+
     private var population: ArrayList<Individual<T>> = ArrayList()
     var generation = 0
 
@@ -22,6 +35,9 @@ class GeneticAlgorithm<T>(private val individualFactory: () -> Individual<T>,
         mutator.genomeManipulator = genomeManipulator
     }
 
+    /**
+     * Runs the algorithm until [stopCondition.shouldContinue()] returns false
+     */
     fun run() {
         // Restart the generation counter
         generation = 0
