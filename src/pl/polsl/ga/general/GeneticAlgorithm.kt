@@ -57,6 +57,8 @@ class GeneticAlgorithm<T>(private val individualFactory: () -> Individual<T>,
             // Mutator individuals and create a new population
             population = mutator.mutate(crossedOverIndividuals)
 
+            population.sortDescending()
+
             generation++
         }
 
@@ -74,7 +76,6 @@ class GeneticAlgorithm<T>(private val individualFactory: () -> Individual<T>,
     }
 
     fun getBestIndividual(): Individual<T> {
-        population.sortDescending()
         return population[0]
     }
 }
