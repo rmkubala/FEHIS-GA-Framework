@@ -17,6 +17,8 @@ The project was implemented in Kotlin programming language and can be used in bo
 
 2. ```pl.polsl.ga.impl``` - Contains implementations of the classes from the ```.general``` package which can be used for other applications
 
+3. ```pl.polsl.ga.example``` - Contains an example of traveling salesman problem solution
+
 ## Usage
 
 ```kotlin
