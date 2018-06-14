@@ -75,6 +75,10 @@ class GeneticAlgorithm<T>(private val individualFactory: () -> Individual<T>,
         population.forEach { i: Individual<T> -> fitnessUpdater.invoke(i) }
     }
 
+    /**
+     * @return the best individual in the population. Works only after [GeneticAlgorithm.run]
+     * was called first
+     */
     fun getBestIndividual(): Individual<T> {
         return population[0]
     }
